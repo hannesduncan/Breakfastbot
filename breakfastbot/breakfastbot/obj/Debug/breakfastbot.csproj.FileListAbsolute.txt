@@ -98,3 +98,5 @@ c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakf
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.Owin.xml
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.pdb
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.ApplicationInsights.xml
