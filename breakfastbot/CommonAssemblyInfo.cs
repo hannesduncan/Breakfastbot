@@ -11,7 +11,7 @@ using System.Reflection;
 //------------------------------------------------------------------------------
 
 [assembly: AssemblyVersion("1.0.0")]
-[assembly: AssemblyFileVersion("1.0.0")]
+[assembly: AssemblyFileVersion("3.0.0")]
 [assembly: AssemblyCopyrightAttribute("Copyright © Aqueduct 2007-2012")]
 [assembly: AssemblyCompanyAttribute("Aqueduct")]
 [assembly: AssemblyConfiguration("Release")]
