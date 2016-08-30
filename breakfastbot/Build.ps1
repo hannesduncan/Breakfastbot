@@ -1,4 +1,4 @@
-﻿Framework "4.6"
+﻿Framework "4.5.1"
 $ErrorActionPreference = "stop"
 
 properties {

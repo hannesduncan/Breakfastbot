@@ -27,11 +27,6 @@ c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakf
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Google.Apis.Sheets.v4.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\log4net.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.Agent.Intercept.dll
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.DependencyCollector.dll
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.PerfCounterCollector.dll
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.ServerTelemetryChannel.dll
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.Web.dll
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.WindowsServer.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.Identity.Core.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
@@ -70,10 +65,6 @@ c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakf
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Google.Apis.Sheets.v4.pdb
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Google.Apis.Sheets.v4.xml
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\log4net.xml
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.DependencyCollector.xml
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.ServerTelemetryChannel.xml
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.Web.xml
-c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AI.WindowsServer.xml
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Newtonsoft.Json.xml
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\RestSharp.xml
@@ -98,5 +89,3 @@ c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakf
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.Owin.xml
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.dll
 c:\users\hannes duncan\documents\visual studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.pdb
-C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.ApplicationInsights.dll
-C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.ApplicationInsights.xml
