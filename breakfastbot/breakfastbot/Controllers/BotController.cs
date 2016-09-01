@@ -30,7 +30,7 @@ namespace AqueductSlackbot.Controllers
         private ValueRange response;
         private SheetsService service;
 
-        public ActionResult Start()
+        public ViewResult Index()
         {
             
             //variables
@@ -100,7 +100,7 @@ namespace AqueductSlackbot.Controllers
             return View(model);
         }
 
-        public ActionResult Msg(HookMessage message)
+        public ViewResult Msg(HookMessage message)
         {
             if (message.text == "yes")
             {
@@ -113,7 +113,7 @@ namespace AqueductSlackbot.Controllers
             return null;
         }
 
-        public ActionResult Payer()
+        public ViewResult Payer()
         {
             int i = 0;
             int j = 0;
