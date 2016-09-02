@@ -22,6 +22,7 @@ namespace AqueductSlackbot.Controllers
         private static string[] scopes = { SheetsService.Scope.Spreadsheets };
         private static List<developers> breaklist = new List<developers>();
         private static List<developers> temp = new List<developers>();
+        private static List<developers> buuuulist = new List<developers>();
         private static string applicationName = "breakfastbot";
         private string urlWithAccessToken = "https://hooks.slack.com/services/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";
         private IList<IList<object>> values;
@@ -102,13 +103,25 @@ namespace AqueductSlackbot.Controllers
 
         public ViewResult Msg(HookMessage message)
         {
+            developers a = new developers
+            {
+                slackname = message.user_name,
+                lastpay = new date { day = "", month = "", year = "" }
+            };
+
             if (message.text == "yes")
             {
-                breaklist.Add(new developers
+                breaklist.Add(a);
+                if (buuuulist.Contains(a))
                 {
-                    slackname = message.user_name,
-                    lastpay = new date { day = "", month = "", year = "" }
-                });
+                    buuuulist.Remove(a);
+                }
+            } else if (message.text == "no")
+            {
+                buuuulist.Add(a);
+                if (breaklist.Contains(a)){
+                    breaklist.Remove(a);
+                }
             }
             return null;
         }
@@ -288,8 +301,9 @@ namespace AqueductSlackbot.Controllers
             public string channel_name { get; set; }
             public string user_id { get; set; }
             public string user_name { get; set; }
+            public string command { get; set; }
             public string text { get; set; }
-            public string trigger_word { get; set; }
+            public string response_url { get; set; }
         }
         public class date
         {
@@ -301,6 +315,10 @@ namespace AqueductSlackbot.Controllers
         {
             public string slackname { get; set; }
             public date lastpay { get; set; }
+        }
+        public class init
+        {
+            public string text { get; set; }
         }
     }
 }
