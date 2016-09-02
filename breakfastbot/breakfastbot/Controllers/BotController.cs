@@ -167,9 +167,9 @@ namespace AqueductSlackbot.Controllers
                     foreach (var otherdev in breaklist)
                     {
                         j = 0;
-                        if (Int32.Parse(lastpayer2.lastpay.year) < Int32.Parse(breaklist[j].lastpay.year))
+                        if (Int32.Parse(lastpayer2.lastpay.year) <= Int32.Parse(breaklist[j].lastpay.year))
                         {
-                            if (Int32.Parse(lastpayer2.lastpay.month) < Int32.Parse(breaklist[j].lastpay.month))
+                            if (Int32.Parse(lastpayer2.lastpay.month) <= Int32.Parse(breaklist[j].lastpay.month))
                             {
                                 if (Int32.Parse(lastpayer2.lastpay.day) < Int32.Parse(breaklist[j].lastpay.day))
                                 {
