@@ -101,7 +101,7 @@ namespace AqueductSlackbot.Controllers
             return View(model);
         }
 
-        public ViewResult Msg(HookMessage message)
+        public ActionResult Msg(HookMessage message)
         {
             developers a = new developers
             {
@@ -109,14 +109,14 @@ namespace AqueductSlackbot.Controllers
                 lastpay = new date { day = "", month = "", year = "" }
             };
 
-            if (message.text == "yes")
+            if (message.text == "breaky yes")
             {
                 breaklist.Add(a);
                 if (buuuulist.Contains(a))
                 {
                     buuuulist.Remove(a);
                 }
-            } else if (message.text == "no")
+            } else if (message.text == "breaky no")
             {
                 buuuulist.Add(a);
                 if (breaklist.Contains(a)){
@@ -304,6 +304,7 @@ namespace AqueductSlackbot.Controllers
             public string command { get; set; }
             public string text { get; set; }
             public string response_url { get; set; }
+            public string trigger_word { get; set; }
         }
         public class date
         {
