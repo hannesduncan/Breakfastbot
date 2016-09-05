@@ -101,3 +101,14 @@ C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakf
 C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.csprojResolveAssemblyReference.cache
 C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.dll
 C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\obj\Debug\breakfastbot.pdb
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.WebHooks.Common.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.WebHooks.Receivers.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.WebHooks.Receivers.Slack.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Nancy.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Nancy.Hosting.Self.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Slack.Webhooks.dll
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.WebHooks.Common.xml
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.WebHooks.Receivers.xml
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Microsoft.AspNet.WebHooks.Receivers.Slack.xml
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Nancy.xml
+C:\Users\Hannes Duncan\Documents\Visual Studio 2015\Projects\breakfastbot\breakfastbot\bin\Nancy.Hosting.Self.xml

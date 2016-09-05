@@ -13,6 +13,10 @@ using System.Threading;
 using Google.Apis.Util.Store;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4.Data;
+using Nancy;
+using Nancy.Hosting.Self;
+using Nancy.ModelBinding;
+using Slack.Webhooks;
 
 namespace AqueductSlackbot.Controllers
 {
@@ -28,13 +32,18 @@ namespace AqueductSlackbot.Controllers
         private IList<IList<object>> values;
         private string spreadsheetId = "1YMLuQ1tJnTJs1FQN0yruMHAS41nIRm1FHT87pP3GCV0";
         private string range = "Sheet1!A2:D";
-        private ValueRange response;
+        private ValueRange response = new ValueRange();
         private SheetsService service;
 
         public ViewResult Index()
         {
-            
-            //variables
+            //setup start finish proccess
+
+            HostConfiguration hostConfigs = new HostConfiguration()
+            {
+                UrlReservations = new UrlReservations() { CreateAutomatically = true }
+            };
+            //variables - start
             var datewords = "";
             string[] done = new string[2];
             string name;
@@ -42,6 +51,13 @@ namespace AqueductSlackbot.Controllers
             string path = AppDomain.CurrentDomain.BaseDirectory;
             UserCredential credential;
             SlackSend client = new SlackSend(urlWithAccessToken);
+            //variables - end
+            int j = 0;
+            int attending = 0;
+            developers lastpayer = new developers();
+            developers lastpayer2 = new developers(); // incase 2 payers are needed
+            ValueRange response2 = response;
+
             //fetch list of devs
             // look for and read credentials for accessing and updating dev table
 
@@ -88,56 +104,26 @@ namespace AqueductSlackbot.Controllers
             }
 
             client.PostMessage(text: "Process: Start!",
-                       channel: "#breakfastmeet");
+                       channel: "#breakytest");
 
             foreach (var dev in temp)
             {
                 client.PostMessage(text: "@" + temp[i].slackname + " can you make it for breakfast",
-                       channel: "@" + temp[i].slackname);
+                       channel: "@slash"); //+ temp[i].slackname);
                 i++;
             }
-           
-            var model = new BotModels { Message = "Process started successfully" };
-            return View(model);
-        }
 
-        public ActionResult Msg(HookMessage message)
-        {
-            developers a = new developers
+            using (var host = new NancyHost(new Uri("http://breakfastbot.aquepreview.com:80/bot"), new DefaultNancyBootstrapper(), hostConfigs))
             {
-                slackname = message.user_name,
-                lastpay = new date { day = "", month = "", year = "" }
-            };
-
-            if (message.text == "breaky yes")
-            {
-                breaklist.Add(a);
-                if (buuuulist.Contains(a))
-                {
-                    buuuulist.Remove(a);
-                }
-            } else if (message.text == "breaky no")
-            {
-                buuuulist.Add(a);
-                if (breaklist.Contains(a)){
-                    breaklist.Remove(a);
-                }
+                host.Start();
+                // System.Threading.Thread.Sleep(300000);//30 mins
+                System.Threading.Thread.Sleep(3600000);//1 hour
             }
-            return null;
-        }
-
-        public ViewResult Payer()
-        {
-            int i = 0;
-            int j = 0;
-            int attending = 0;
-            developers lastpayer = new developers();
-            developers lastpayer2 = new developers(); // incase 2 payers are needed
-            SlackSend client = new SlackSend(urlWithAccessToken);
-            ValueRange response2 = response;
+            //after everything has been done
+            i = 0;
 
             //SpreadsheetsResource.ValuesResource.UpdateRequest request2 =
-              //  service.Spreadsheets.Values.Update(response,spreadsheetId, range);
+            //  service.Spreadsheets.Values.Update(response,spreadsheetId, range);
 
             foreach (var devs in temp)
             {
@@ -201,18 +187,19 @@ namespace AqueductSlackbot.Controllers
 
                 // posting messages to channel on results of proccess
                 client.PostMessage(text: "It is @" + lastpayer.slackname + " turn to pay",
-                    channel: "#breakfastmeet");
+                    channel: "#breakytest");
                 if (!(lastpayer2.slackname == null))
                 {
                     client.PostMessage(text: "and @" + lastpayer2.slackname + " has to pay aswell\n because of too many people!",
-                        channel: "#breakfastmeet");
+                        channel: "#breakytest");
                 }
                 client.PostMessage(text: "there are a total of " + attending + " people attending breakfast!",
-                    channel: "#breakfastmeet");
-            } else
+                    channel: "#breakytest");
+            }
+            else
             {
                 client.PostMessage(text: "no breakky :(",
-                    channel: "#breakfastmeet");
+                    channel: "#breakytest");
             }
             //start updating dates for google sheets docs
 
@@ -242,12 +229,39 @@ namespace AqueductSlackbot.Controllers
             request3.Execute();
 
             client.PostMessage(text: "better luck next time",
-                channel: "#breakfastmeet");
+                channel: "#breakytest");
             client.PostMessage(text: "Process: Stop",
-                channel: "#breakfastmeet");
+                channel: "#breakytest");
 
-            return null;
+
+            var model = new BotModels { Message = "Process started successfully" };
+            return View(model);
         }
+
+//        public ActionResult Msg(HookMessage message)
+//        {
+//            developers a = new developers
+//            {
+//                slackname = message.user_name,
+//                lastpay = new date { day = "", month = "", year = "" }
+//            };
+//
+//            if (message.text == "breaky yes")
+//            {
+//                breaklist.Add(a);
+//               if (buuuulist.Contains(a))
+//                {
+//                    buuuulist.Remove(a);
+//                }
+//            } else if (message.text == "breaky no")
+//            {
+//                buuuulist.Add(a);
+//                if (breaklist.Contains(a)){
+//                    breaklist.Remove(a);
+//                }
+//            }
+//            return null;
+//       }
 
         //currently just post client 
         public class SlackSend
@@ -283,6 +297,49 @@ namespace AqueductSlackbot.Controllers
                     var response = client.UploadValues(_uri, "POST", data);
                     string responseText = _encoding.GetString(response);
                 }
+            }
+        }
+        //webhooks stuff maybe
+        public class WebhookModule : Nancy.NancyModule
+        {
+            // list of people as a inbetween list for connewcting main method with this module ( cant ref since its a webhook post method)
+            public WebhookModule()
+            {// post mwethod
+                Post["/"] = _ =>
+                {
+                    var model = this.Bind<HookMessage>();
+                    var message = string.Empty;
+                    Console.WriteLine(model.text.ToLower());
+                    if (model.token != "YWrKxANIXAOvx4NrEzJAIgqU")
+                    { //checks the token of incoming message if found
+                        Console.WriteLine("Invalid Token\n Ignored!");
+                        return null;//ignored if not recognised
+                    }
+                    if (model.text == "yes")
+                    {// if the trigger word was found - written in correct format and response was yes
+                        message = string.Format("@" + model.user_name + " Recieved! Added to breakfast list");
+                        breaklist.Add(new developers// add them to yeslist -> goes into breakfastList in update method
+                        {
+                            slackname = model.user_name,
+                            lastpay = { }
+                        });
+                        Console.WriteLine("'" + message + "' sent back to " + model.user_name);
+                    }
+                    if (model.text == "no")
+                    {// if response is no
+                        message = string.Format("@" + model.user_name + " Recieved! removed from this weeks breky list");
+                        string name = model.user_name;
+                        buuuulist.Add(new developers// adds them to nolist -> goes into buuuuList in update method
+                        {
+                            slackname = model.user_name,
+                            lastpay = { }
+                        });
+                        Console.WriteLine("'" + message + "' sent back to " + model.user_name);
+                    }
+                    if (!string.IsNullOrWhiteSpace(message))// if message is not empty
+                        return new SlackMessage { Text = message, Username = "breaky bot" };
+                    return null;
+                };
             }
         }
 
