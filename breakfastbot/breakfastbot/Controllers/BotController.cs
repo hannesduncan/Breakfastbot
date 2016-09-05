@@ -134,6 +134,8 @@ namespace AqueductSlackbot.Controllers
             developers lastpayer = new developers();
             developers lastpayer2 = new developers(); // incase 2 payers are needed
             SlackSend client = new SlackSend(urlWithAccessToken);
+            ValueRange response2 = response;
+
             //SpreadsheetsResource.ValuesResource.UpdateRequest request2 =
               //  service.Spreadsheets.Values.Update(response,spreadsheetId, range);
 
@@ -214,17 +216,17 @@ namespace AqueductSlackbot.Controllers
             }
             //start updating dates for google sheets docs
 
-            for (i = 0; i < response.Values.Count; i++)
+            for (i = 0; i < response2.Values.Count; i++)
             {
-                if (response.Values[i][1].ToString() == lastpayer.slackname)
+                if (response2.Values[i][1].ToString() == lastpayer.slackname)
                 {
-                    response.Values[i][2] = DateTime.Now.ToString("dd/MM/yyyy");
+                    response2.Values[i][2] = DateTime.Now.ToString("dd/MM/yyyy");
                 }
                 if (lastpayer2.slackname != null || lastpayer2.slackname != "")
                 {
-                    if (response.Values[i][1].ToString() == lastpayer2.slackname)
+                    if (response2.Values[i][1].ToString() == lastpayer2.slackname)
                     {
-                        response.Values[i][2] = DateTime.Now.ToString("dd/MM/yyyy");
+                        response2.Values[i][2] = DateTime.Now.ToString("dd/MM/yyyy");
                     }
                 }
             }
@@ -233,7 +235,7 @@ namespace AqueductSlackbot.Controllers
             string spreadsheetId2 = "1YMLuQ1tJnTJs1FQN0yruMHAS41nIRm1FHT87pP3GCV0";
             string range2 = "Sheet1!A2:D14";
             SpreadsheetsResource.ValuesResource.UpdateRequest request3 =
-                service.Spreadsheets.Values.Update(response, spreadsheetId2, range2);
+                service.Spreadsheets.Values.Update(response2, spreadsheetId2, range2);
             // execute order 666
 
             request3.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
