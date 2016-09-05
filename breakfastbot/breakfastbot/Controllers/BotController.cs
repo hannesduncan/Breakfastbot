@@ -134,8 +134,8 @@ namespace AqueductSlackbot.Controllers
             developers lastpayer = new developers();
             developers lastpayer2 = new developers(); // incase 2 payers are needed
             SlackSend client = new SlackSend(urlWithAccessToken);
-            SpreadsheetsResource.ValuesResource.UpdateRequest request =
-                service.Spreadsheets.Values.Update(response,spreadsheetId, range);
+            //SpreadsheetsResource.ValuesResource.UpdateRequest request2 =
+              //  service.Spreadsheets.Values.Update(response,spreadsheetId, range);
 
             foreach (var devs in temp)
             {
@@ -232,7 +232,7 @@ namespace AqueductSlackbot.Controllers
 
             string spreadsheetId2 = "1YMLuQ1tJnTJs1FQN0yruMHAS41nIRm1FHT87pP3GCV0";
             string range2 = "Sheet1!A2:D14";
-            SpreadsheetsResource.ValuesResource.UpdateRequest request2 =
+            SpreadsheetsResource.ValuesResource.UpdateRequest request3 =
                 service.Spreadsheets.Values.Update(response, spreadsheetId2, range2);
             // execute order 666
 
