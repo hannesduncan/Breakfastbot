@@ -109,7 +109,7 @@ namespace AqueductSlackbot.Controllers
             foreach (var dev in temp)
             {
                 client.PostMessage(text: "@" + temp[i].slackname + " can you make it for breakfast",
-                       channel: "@slash"); //+ temp[i].slackname);
+                       channel: "@hannes"); //+ temp[i].slackname);
                 i++;
             }
 
