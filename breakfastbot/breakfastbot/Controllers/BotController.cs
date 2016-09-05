@@ -236,8 +236,8 @@ namespace AqueductSlackbot.Controllers
                 service.Spreadsheets.Values.Update(response, spreadsheetId2, range2);
             // execute order 666
 
-            request2.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
-            request2.Execute();
+            request3.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
+            request3.Execute();
 
             client.PostMessage(text: "better luck next time",
                 channel: "#breakfastmeet");
