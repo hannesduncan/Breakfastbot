@@ -113,7 +113,7 @@ namespace AqueductSlackbot.Controllers
                 i++;
             }
 
-            using (var host = new NancyHost(new Uri("http://localhost/bot/:80"), new DefaultNancyBootstrapper(), hostConfigs))
+            using (var host = new NancyHost(new Uri("http://breakfastbot.aqueduct.com:80/bot/"), new DefaultNancyBootstrapper(), hostConfigs))
             {
                 host.Start();
                 // System.Threading.Thread.Sleep(300000);//30 mins
