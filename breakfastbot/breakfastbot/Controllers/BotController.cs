@@ -113,7 +113,7 @@ namespace AqueductSlackbot.Controllers
                 i++;
             }
 
-            using (var host = new NancyHost(new Uri("http://breakfastbot.aquepreview.com/bot/:80"), new DefaultNancyBootstrapper(), hostConfigs))
+            using (var host = new NancyHost(new Uri("http://localhost/bot/:80"), new DefaultNancyBootstrapper(), hostConfigs))
             {
                 host.Start();
                 // System.Threading.Thread.Sleep(300000);//30 mins
@@ -315,7 +315,7 @@ namespace AqueductSlackbot.Controllers
                         Console.WriteLine("Invalid Token\n Ignored!");
                         return null;//ignored if not recognised
                     }
-                    if (model.text == "yes")
+                    if (model.text == "breaky yes")
                     {// if the trigger word was found - written in correct format and response was yes
                         message = string.Format("@" + model.user_name + " Recieved! Added to breakfast list");
                         breaklist.Add(new developers// add them to yeslist -> goes into breakfastList in update method
@@ -325,7 +325,7 @@ namespace AqueductSlackbot.Controllers
                         });
                         Console.WriteLine("'" + message + "' sent back to " + model.user_name);
                     }
-                    if (model.text == "no")
+                    if (model.text == "breaky no")
                     {// if response is no
                         message = string.Format("@" + model.user_name + " Recieved! removed from this weeks breky list");
                         string name = model.user_name;
