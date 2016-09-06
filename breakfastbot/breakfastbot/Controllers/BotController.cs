@@ -41,7 +41,7 @@ namespace AqueductSlackbot.Controllers
 
             HostConfiguration hostConfigs = new HostConfiguration()
             {
-                UrlReservations = new UrlReservations() { CreateAutomatically = true }
+                UrlReservations = new UrlReservations() { CreateAutomatically = true , User = "Everyone" }
             };
             //variables - start
             var datewords = "";
@@ -115,6 +115,7 @@ namespace AqueductSlackbot.Controllers
 
             using (var host = new NancyHost(new Uri("http://localhost:80/bot/"), new DefaultNancyBootstrapper(), hostConfigs))
             {
+                
                 host.Start();
                 // System.Threading.Thread.Sleep(300000);//30 mins
                 System.Threading.Thread.Sleep(3600000);//1 hour
