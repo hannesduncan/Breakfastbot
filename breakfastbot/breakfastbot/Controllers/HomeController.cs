@@ -113,12 +113,12 @@ namespace breakfastbot.Controllers
                 i++;
             }
 
-            using (var host = new NancyHost(hostConfigs, new Uri("http://localhost:80/bot/")))
+            using (var host = new NancyHost(hostConfigs, new Uri("http://localhost:80")))
             {
 
                 host.Start();
                 // System.Threading.Thread.Sleep(300000);//30 mins
-                System.Threading.Thread.Sleep(3600000);//1 hour
+                Thread.Sleep(3600000);//1 hour
             }
             //after everything has been done
             i = 0;
