@@ -275,11 +275,11 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebHookConfig.cs" />
-    <Compile Include="Controllers\BotController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\BotModels.cs" />
+    <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebHookHandlers\SlackWebHookHandler.cs" />
   </ItemGroup>
