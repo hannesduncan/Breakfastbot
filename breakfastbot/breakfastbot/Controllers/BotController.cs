@@ -20,7 +20,7 @@ using Slack.Webhooks;
 
 namespace AqueductSlackbot.Controllers
 {
-    public class botController : Controller
+    public class BotController : Controller
     {
         // GET: Bot
         private static string[] scopes = { SheetsService.Scope.Spreadsheets };
