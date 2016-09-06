@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace breakfastbot.Models
 {
-    public class BotModels
+    public class IdentityModels
     {
         public string Message { get; set; }
     }
