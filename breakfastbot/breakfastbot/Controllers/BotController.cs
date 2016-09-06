@@ -20,7 +20,7 @@ using Slack.Webhooks;
 
 namespace AqueductSlackbot.Controllers
 {
-    public class BotController : Controller
+    public class botController : Controller
     {
         // GET: Bot
         private static string[] scopes = { SheetsService.Scope.Spreadsheets };
@@ -113,7 +113,7 @@ namespace AqueductSlackbot.Controllers
                 i++;
             }
 
-            using (var host = new NancyHost(hostConfigs,new Uri("http://localhost:80/bot/" )))
+            using (var host = new NancyHost(hostConfigs, new Uri("http://localhost:80/bot/")))
             {
                 
                 host.Start();
