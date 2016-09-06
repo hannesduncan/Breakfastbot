@@ -235,7 +235,7 @@ namespace AqueductSlackbot.Controllers
                 channel: "#breakytest");
 
 
-            var model = new IdentityModels { Message = "Process started successfully" };
+            var model = new BotModels { Message = "Process started successfully" };
             return View(model);
         }
 

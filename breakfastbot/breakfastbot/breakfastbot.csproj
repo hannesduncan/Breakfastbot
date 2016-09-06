@@ -275,11 +275,13 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebHookConfig.cs" />
+    <Compile Include="Controllers\BotController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\BotModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebHookHandlers\SlackWebHookHandler.cs" />
   </ItemGroup>
@@ -326,10 +328,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Bot\Start.cshtml" />
-    <Content Include="Views\Bot\View.cshtml" />
-    <Content Include="Views\Bot\Index.cshtml" />
+    <Content Include="Views\Home\Start.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Service References\WebHooks\ConnectedService.json" />
+    <Content Include="Views\bot\Index.cshtml" />
+    <Content Include="Views\bot\Start.cshtml" />
+    <Content Include="Views\bot\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
