@@ -282,6 +282,7 @@
     </Compile>
     <Compile Include="Models\BotModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebHookHandlers\SlackWebHookHandler.cs" />
   </ItemGroup>

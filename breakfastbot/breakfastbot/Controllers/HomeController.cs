@@ -113,13 +113,13 @@ namespace breakfastbot.Controllers
                 i++;
             }
 
-            using (var host = new NancyHost(hostConfigs, new Uri("http://breakfastbot.aquepreview.com:80")))
-            {
-
-                host.Start();
+            //using (var host = new NancyHost(hostConfigs, new Uri("http://breakfastbot.aquepreview.com:80")))
+            //{
+                
+               // host.Start();
                 // System.Threading.Thread.Sleep(300000);//30 mins
                 Thread.Sleep(3600000);//1 hour
-            }
+            //}
             //after everything has been done
             i = 0;
 
@@ -301,7 +301,7 @@ namespace breakfastbot.Controllers
             }
         }
         //webhooks stuff maybe
-        public class WebhookModule : Nancy.NancyModule
+        public class WebhookModule : NancyModule
         {
             // list of people as a inbetween list for connewcting main method with this module ( cant ref since its a webhook post method)
             public WebhookModule()
