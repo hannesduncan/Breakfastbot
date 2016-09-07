@@ -139,9 +139,9 @@ namespace breakyserver.Modules
                     Console.WriteLine("'" + message + "' sent back to " + model.user_name);
                 }
                 if (!string.IsNullOrWhiteSpace(message))// if message is not empty
-                    return new SlackMessage { Text = message, Username = "breaky bot" };
+                    return new SlackMessage { Text = message, Username = "breaky bot", Channel = "#breakytest" };
                 else
-                    return new SlackMessage { Text = "was empty", Username = "breaky bot" };
+                    return new SlackMessage { Text = "was empty", Username = "breaky bot", Channel = "#breakytest" };
             };
         }
         
