@@ -34,7 +34,7 @@ namespace breakyserver.Modules
         public HomeModule()
         {
 
-            Get["/"] = _ =>
+            Get["/start"] = _ =>
             {
                 //variables - start
                 var datewords = "";
