@@ -140,7 +140,8 @@ namespace breakyserver.Modules
                 }
                 if (!string.IsNullOrWhiteSpace(message))// if message is not empty
                     return new SlackMessage { Text = message, Username = "breaky bot" };
-                return null;
+                else
+                    return new SlackMessage { Text = "was empty", Username = "breaky bot" };
             };
         }
         
@@ -153,9 +154,7 @@ public class HookMessage
     public string channel_name { get; set; }
     public string user_id { get; set; }
     public string user_name { get; set; }
-    public string command { get; set; }
     public string text { get; set; }
-    public string response_url { get; set; }
     public string trigger_word { get; set; }
 }
 public class date
