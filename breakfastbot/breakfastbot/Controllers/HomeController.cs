@@ -17,6 +17,7 @@ using Nancy;
 using Nancy.Hosting.Self;
 using Nancy.ModelBinding;
 using Slack.Webhooks;
+using System.Web.Services.Description;
 
 namespace breakfastbot.Controllers
 {
@@ -113,13 +114,13 @@ namespace breakfastbot.Controllers
                 i++;
             }
 
-            //using (var host = new NancyHost(hostConfigs, new Uri("http://breakfastbot.aquepreview.com:80")))
-            //{
+            using (var host = new NancyHost(hostConfigs, new Uri("http://breakfastbot.aquepreview.com:80")))
+            {
                 
-               // host.Start();
+                host.Start();
                 // System.Threading.Thread.Sleep(300000);//30 mins
                 Thread.Sleep(3600000);//1 hour
-            //}
+            }
             //after everything has been done
             i = 0;
 

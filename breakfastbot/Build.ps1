@@ -11,7 +11,7 @@ properties {
     $global_assembly_info_file = "$base_dir\CommonAssemblyInfo.cs"
 	
 	# build/deployment settings
-	$solution_file = "$base_dir\Breakfastbot.sln"
+	$solution_file = "$base_dir\Breakyserver.sln"
     $build_configuration = "Release"
     $build_target = "Rebuild"
     $build_verbosity = "diag"
