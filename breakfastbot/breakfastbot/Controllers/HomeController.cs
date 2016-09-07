@@ -114,7 +114,7 @@ namespace breakfastbot.Controllers
                 i++;
             }
 
-            using (var host = new NancyHost(hostConfigs, new Uri("http://breakfastbot.aquepreview.com:80")))
+            using (var host = new NancyHost(hostConfigs, new Uri("http://breakfastbot.aquepreview.com:81")))
             {
                 
                 host.Start();
