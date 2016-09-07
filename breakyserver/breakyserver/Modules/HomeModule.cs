@@ -107,7 +107,7 @@ namespace breakyserver.Modules
                 }
                 return null;
             };
-            Post["/"] = _ =>
+            Post["/msg"] = _ =>
             {
                 var model = this.Bind<HookMessage>();
                 var message = string.Empty;
@@ -143,6 +143,7 @@ namespace breakyserver.Modules
                 return null;
             };
         }
+        
     }
 public class HookMessage
 {
