@@ -95,15 +95,15 @@ namespace breakybot.Controllers
             }
 
             client.PostMessage(text: "Process: Start!",
-                       channel: "#breakfastmeet");
+                       channel: "#breakytest");
 
             foreach (var dev in temp)
             {
                 client.PostMessage(text: "@" + temp[i].slackname + " can you make it for breakfast",
-                       channel: "@" + temp[i].slackname); 
+                       channel: "@hannes"); //+ temp[i].slackname); 
                 i++;
             }
-
+            Thread.Sleep(360000);
             return View();
         }
 
@@ -182,19 +182,19 @@ namespace breakybot.Controllers
 
                 // posting messages to channel on results of proccess
                 client.PostMessage(text: "It is @" + lastpayer.slackname + " turn to pay",
-                    channel: "#breakfastmeet");
+                    channel: "#breakytest");
                 if (!(lastpayer2.slackname == null))
                 {
                     client.PostMessage(text: "and @" + lastpayer2.slackname + " has to pay aswell\n because of too many people!",
-                        channel: "#breakfastmeet");
+                        channel: "#breakytest");
                 }
                 client.PostMessage(text: "there are a total of " + attending + " people attending breakfast!",
-                    channel: "#breakfastmeet");
+                    channel: "#breakytest");
             }
             else
             {
                 client.PostMessage(text: "no breakky :(",
-                    channel: "#breakfastmeet");
+                    channel: "#breakytest");
             }
             //start updating dates for google sheets docs
             for (i = 0; i < response.Values.Count(); i++)
@@ -221,9 +221,9 @@ namespace breakybot.Controllers
             request3.Execute();
 
             client.PostMessage(text: "better luck next time",
-                channel: "#breakfastmeet");
+                channel: "#breakytest");
             client.PostMessage(text: "Process: Stop",
-                channel: "#breakfastmeet");
+                channel: "#breakytest");
             return View();
         }
     }
@@ -231,51 +231,43 @@ namespace breakybot.Controllers
     public class SlackWebHookHandler : WebHookHandler
     {
         private static List<developers> breaklist = new List<developers>();
-        private static List<developers> temp2 = new List<developers>();
         private static List<developers> tempbuuuulist = new List<developers>();
-        private developers a = new developers { };
+        private static developers a = new developers { };
+        private static developers b = new developers { };
+        private static developers c = new developers { };
+
         public override Task ExecuteAsync(string generator, WebHookHandlerContext context)
         {
             NameValueCollection nvc;
             if (context.TryGetData<NameValueCollection>(out nvc))
             {
-                 a = new developers
-                { 
+                 string urlWithAccessToken = "https://hooks.slack.com/services/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";
+        SlackSend client = new SlackSend(urlWithAccessToken);
+                string msg = "";
+                a = new developers
+                {
                     slackname = nvc["user_name"],
-                    lastpay = { }
+                    lastpay = new date {day = "1", month = "1", year = "1"}
                 };
                 string question = nvc["subtext"];
-                string msg = "";
 
                 if (question == "yes")
                 {
-                    if (!(breaklist.Contains(a)) == true)
-                    {
                         breaklist.Add(a);
-                        if (tempbuuuulist.Contains(a) == true)
-                        {
-                            tempbuuuulist.Remove(a);
-                        }
+                        tempbuuuulist.Remove(a);
                         msg = "added " + breaklist.Count() + " " + tempbuuuulist.Count();
-                    }
                 }
                 else if (question == "no")
                 {
-                    if (!(tempbuuuulist.Contains(a) == true))
-                    {
                         tempbuuuulist.Add(a);
-                        if (breaklist.Contains(a) == true)
-                        {
-                            breaklist.Remove(a);
-                        }
+                        breaklist.Remove(a);
                         msg = "removed " + breaklist.Count() + " " + tempbuuuulist.Count();
-                    }
                 }
                 else if (question == "status")
                 {
                     for (int i = 0; i < breaklist.Count(); i++)
                     {
-                        msg += " " + breaklist[i].slackname + "\n";
+                        msg += " " + breaklist[i].slackname + "";
                     }
                 } else
                 {
@@ -290,7 +282,7 @@ namespace breakybot.Controllers
                     }
                     if (num == 3)
                     {
-                        msg = "I'm sorry Dave, i can't let you do that.";
+                        msg = "I'm sorry " + a.slackname  +", i can't let you do that.";
                     }
                     if (num == 4)
                     {
@@ -298,14 +290,15 @@ namespace breakybot.Controllers
                     }
                     if (num == 5)
                     {
-                        msg = "Just what do you think you're doing, Dave?";
+                        msg = "Just what do you think you're doing, " + a.slackname + "?";
                     }
                     if (num == 6)
                     {
                         msg = "we can talk about this";
                     }
                 }
-               SlackResponse reply = new SlackResponse(msg);
+                msg += " " + a.slackname;
+                SlackResponse reply = new SlackResponse(msg);
                context.Response = context.Request.CreateResponse(reply);
            }
            return Task.FromResult(true);
