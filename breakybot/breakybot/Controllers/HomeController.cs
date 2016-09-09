@@ -95,12 +95,12 @@ namespace breakybot.Controllers
             }
 
             client.PostMessage(text: "Process: Start!",
-                       channel: "#breakytest");
+                       channel: "#breakfastmeet");
 
             foreach (var dev in temp)
             {
                 client.PostMessage(text: "@" + temp[i].slackname + " can you make it for breakfast",
-                       channel: "@hannes"); //+ temp[i].slackname); 
+                       channel: "@"+ temp[i].slackname); 
                 i++;
             }
             Thread.Sleep(360000);
@@ -182,19 +182,19 @@ namespace breakybot.Controllers
 
                 // posting messages to channel on results of proccess
                 client.PostMessage(text: "It is @" + lastpayer.slackname + " turn to pay",
-                    channel: "#breakytest");
+                    channel: "#breakfastmeet");
                 if (!(lastpayer2.slackname == null))
                 {
                     client.PostMessage(text: "and @" + lastpayer2.slackname + " has to pay aswell\n because of too many people!",
-                        channel: "#breakytest");
+                        channel: "#breakfastmeet");
                 }
                 client.PostMessage(text: "there are a total of " + attending + " people attending breakfast!",
-                    channel: "#breakytest");
+                    channel: "#breakfastmeet");
             }
             else
             {
                 client.PostMessage(text: "no breakky :(",
-                    channel: "#breakytest");
+                    channel: "#breakfastmeet");
             }
             //start updating dates for google sheets docs
             for (i = 0; i < response.Values.Count(); i++)
@@ -221,9 +221,9 @@ namespace breakybot.Controllers
             request3.Execute();
 
             client.PostMessage(text: "better luck next time",
-                channel: "#breakytest");
+                channel: "#breakfastmeet");
             client.PostMessage(text: "Process: Stop",
-                channel: "#breakytest");
+                channel: "#breakfastmeet");
             return View();
         }
     }
