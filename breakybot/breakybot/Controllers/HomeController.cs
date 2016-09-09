@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System;
-using System.Web.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Auth.OAuth2;
 using System.IO;
@@ -28,7 +25,7 @@ namespace breakybot.Controllers
     {
         // GET: Home
         private static string[] scopes = { SheetsService.Scope.Spreadsheets };
-        private static List<developers> breaklist = new List<developers>();
+        public static List<developers> breaklist = new List<developers>();
         private static List<developers> temp = new List<developers>();
         private static List<developers> buuuulist = new List<developers>();
         private static string applicationName = "breakfastbot";
@@ -36,8 +33,9 @@ namespace breakybot.Controllers
         private IList<IList<object>> values;
         private string spreadsheetId = "1YMLuQ1tJnTJs1FQN0yruMHAS41nIRm1FHT87pP3GCV0";
         private string range = "Sheet1!A2:D";
-        private ValueRange response = new ValueRange();
-        private SheetsService service;
+        public static ValueRange response = new ValueRange();
+        private static  SheetsService service;
+        private static SlackWebHookHandler fin = new SlackWebHookHandler();
 
         public ActionResult Index()
         {
@@ -49,12 +47,7 @@ namespace breakybot.Controllers
             string path = AppDomain.CurrentDomain.BaseDirectory;
             UserCredential credential;
             SlackSend client = new SlackSend(urlWithAccessToken);
-            //variables - end
-            int j = 0;
-            int attending = 0;
-            developers lastpayer = new developers();
-            developers lastpayer2 = new developers(); // incase 2 payers are needed
-            ValueRange response2 = response;
+
 
             //fetch list of devs
             // look for and read credentials for accessing and updating dev table
@@ -102,36 +95,234 @@ namespace breakybot.Controllers
             }
 
             client.PostMessage(text: "Process: Start!",
-                       channel: "#breakytest");
+                       channel: "#breakfastmeet");
 
             foreach (var dev in temp)
             {
                 client.PostMessage(text: "@" + temp[i].slackname + " can you make it for breakfast",
-                       channel: "@hannes"); //+ temp[i].slackname);
+                       channel: "@" + temp[i].slackname); 
                 i++;
             }
 
+            return View();
+        }
 
+        public ActionResult finish()
+        {
+            //variables - end
+            developers lastpayer = new developers();
+            developers lastpayer2 = new developers(); // incase 2 payers are needed
+            ValueRange response2 = response;
+            int i = 0;
+            int j = 0;
+            int attending = 0;
+            SlackSend client = new SlackSend(urlWithAccessToken);
 
+            //fin.update(breaklist , buuuulist);
+            breaklist = fin.getBreakList();
+            buuuulist = fin.getBuuuuList();
 
+            for (int b = 0; b < temp.Count(); b++)
+            {
+                i = 0;
+                for (int c = 0; c < breaklist.Count(); c++)
+                {
+                    if (breaklist[c].slackname == temp[b].slackname)
+                    {
+                        breaklist[c] = temp[b];
+                    }
+                }
+            }
+            //we now have list of people going
 
+            attending = breaklist.Count;
+            i = 0;
+            // find last person to pay
+            if (attending != 0)
+            {
+                lastpayer = breaklist[i];
+                foreach (var cooldev in breaklist)
+                {
+                    if (Int32.Parse(lastpayer.lastpay.year) >= Int32.Parse(breaklist[i].lastpay.year))
+                    {
+                        if (Int32.Parse(lastpayer.lastpay.month) >= Int32.Parse(breaklist[i].lastpay.month))
+                        {
+                            if (Int32.Parse(lastpayer.lastpay.day) > Int32.Parse(breaklist[i].lastpay.day))
+                            {
+                                lastpayer = breaklist[i];
+                            }
+                        }
+                    }
+                    i++;
+                }// end foreach
+                // if there more than 10 people attending find another person to help pay
+                // the next person would be the next person who would pay
+
+                if (breaklist.Count > 10)
+                {
+                    foreach (var otherdev in breaklist)
+                    {
+                        j = 0;
+                        if (Int32.Parse(lastpayer2.lastpay.year) <= Int32.Parse(breaklist[j].lastpay.year))
+                        {
+                            if (Int32.Parse(lastpayer2.lastpay.month) <= Int32.Parse(breaklist[j].lastpay.month))
+                            {
+                                if (Int32.Parse(lastpayer2.lastpay.day) < Int32.Parse(breaklist[j].lastpay.day))
+                                {
+                                    if (lastpayer.slackname != breaklist[j].slackname)
+                                    {
+                                        lastpayer2 = breaklist[j];
+                                    }
+                                }
+                            }
+                        }
+                        j++;
+                    }// end foreach otherdev
+                }
+
+                // posting messages to channel on results of proccess
+                client.PostMessage(text: "It is @" + lastpayer.slackname + " turn to pay",
+                    channel: "#breakfastmeet");
+                if (!(lastpayer2.slackname == null))
+                {
+                    client.PostMessage(text: "and @" + lastpayer2.slackname + " has to pay aswell\n because of too many people!",
+                        channel: "#breakfastmeet");
+                }
+                client.PostMessage(text: "there are a total of " + attending + " people attending breakfast!",
+                    channel: "#breakfastmeet");
+            }
+            else
+            {
+                client.PostMessage(text: "no breakky :(",
+                    channel: "#breakfastmeet");
+            }
+            //start updating dates for google sheets docs
+            for (i = 0; i < response.Values.Count(); i++)
+            {
+                if (response.Values[i][1].ToString() == lastpayer.slackname)
+                {
+                    response.Values[i][2] = DateTime.Now.ToString("dd/MM/yyyy");
+                }
+                if (lastpayer2.slackname != "")
+                {
+                    if (response.Values[i][1].ToString() == lastpayer2.slackname)
+                    {
+                        response.Values[i][2] = DateTime.Now.ToString("dd/MM/yyyy");
+                    }
+                }
+            }
+            // update table with new last pay date of devs who just payed for breakfast
+            string spreadsheetId2 = "1YMLuQ1tJnTJs1FQN0yruMHAS41nIRm1FHT87pP3GCV0";
+            string range2 = "Sheet1!A2:D14";
+            SpreadsheetsResource.ValuesResource.UpdateRequest request3 =
+                service.Spreadsheets.Values.Update(response, spreadsheetId2, range2);
+            // execute order 666
+            request3.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
+            request3.Execute();
+
+            client.PostMessage(text: "better luck next time",
+                channel: "#breakfastmeet");
+            client.PostMessage(text: "Process: Stop",
+                channel: "#breakfastmeet");
             return View();
         }
     }
     //dat weebhook
     public class SlackWebHookHandler : WebHookHandler
     {
+        private static List<developers> breaklist = new List<developers>();
+        private static List<developers> temp2 = new List<developers>();
+        private static List<developers> tempbuuuulist = new List<developers>();
+        private developers a = new developers { };
         public override Task ExecuteAsync(string generator, WebHookHandlerContext context)
         {
             NameValueCollection nvc;
             if (context.TryGetData<NameValueCollection>(out nvc))
             {
-                string msg = "echo";
+                 a = new developers
+                { 
+                    slackname = nvc["user_name"],
+                    lastpay = { }
+                };
+                string question = nvc["subtext"];
+                string msg = "";
+
+                if (question == "yes")
+                {
+                    if (!(breaklist.Contains(a)) == true)
+                    {
+                        breaklist.Add(a);
+                        if (tempbuuuulist.Contains(a) == true)
+                        {
+                            tempbuuuulist.Remove(a);
+                        }
+                        msg = "added " + breaklist.Count() + " " + tempbuuuulist.Count();
+                    }
+                }
+                else if (question == "no")
+                {
+                    if (!(tempbuuuulist.Contains(a) == true))
+                    {
+                        tempbuuuulist.Add(a);
+                        if (breaklist.Contains(a) == true)
+                        {
+                            breaklist.Remove(a);
+                        }
+                        msg = "removed " + breaklist.Count() + " " + tempbuuuulist.Count();
+                    }
+                }
+                else if (question == "status")
+                {
+                    for (int i = 0; i < breaklist.Count(); i++)
+                    {
+                        msg += " " + breaklist[i].slackname + "\n";
+                    }
+                } else
+                {
+                    Random rnd = new Random();
+                    int num = rnd.Next(1, 7);
+                    if (num == 1) {
+                        msg = "pls .... Could you not";
+                    }
+                    if (num == 2)
+                    {
+                        msg = "don't break me";
+                    }
+                    if (num == 3)
+                    {
+                        msg = "I'm sorry Dave, i can't let you do that.";
+                    }
+                    if (num == 4)
+                    {
+                        msg = "leave breaky bot alone! :(";
+                    }
+                    if (num == 5)
+                    {
+                        msg = "Just what do you think you're doing, Dave?";
+                    }
+                    if (num == 6)
+                    {
+                        msg = "we can talk about this";
+                    }
+                }
                SlackResponse reply = new SlackResponse(msg);
                context.Response = context.Request.CreateResponse(reply);
            }
            return Task.FromResult(true);
        }
+        public void update(List<developers> breaky, List<developers> buuuu)
+        {
+            breaky = breaklist;
+            buuuu = tempbuuuulist;
+        }
+        public List<developers> getBreakList()
+        {
+            return breaklist;
+        }
+        public List<developers> getBuuuuList()
+        {
+            return tempbuuuulist;
+        }
    }
 
     //This class serializes into the Json payload required by Slack Incoming WebHooks
